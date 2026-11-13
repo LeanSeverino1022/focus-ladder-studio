@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F3EC">
+<title>One thing — Quiet Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="daruma-shape" viewBox="0 0 100 110">
+    <path class="d-body" d="M50 5C19 5 7 38 7 72c0 25 20 32 43 32s43-7 43-32C93 38 81 5 50 5"/>
+    <path class="d-face" d="M50 16c-23 0-32 19-32 37 0 14 14 21 32 21s32-7 32-21c0-18-9-37-32-37"/>
+    <path class="d-brow" d="M23 36c6-7 13-9 19-6M77 36c-6-7-13-9-19-6"/>
+    <circle class="d-eye" cx="34" cy="47" r="10"/>
+    <circle class="d-eye" cx="66" cy="47" r="10"/>
+    <circle class="d-pupil d-pupil-l" cx="34" cy="47" r="5.5"/>
+    <circle class="d-pupil d-pupil-r" cx="66" cy="47" r="5.5"/>
+    <path class="d-mouth" d="M45 61q5 4 10 0"/>
+    <path class="d-beard" d="M29 84l5 10m16-14v16m21-13-5 11"/>
+  </symbol>
+</svg>
+<main class="shell" id="main" tabindex="-1">
+  <header>
+    <a class="brand" href="./">one thing<span>.</span></a>
+    <span class="demo" id="mode-label">QUIET STUDIO · PERSONAL TRIAL</span>
+  </header>
+
+  <div id="save-banner" class="banner" role="alert" hidden></div>
+
+  <nav class="areas" aria-label="Commitment area">
+    <button type="button" data-area="career" aria-pressed="true">Career</button>
+    <button type="button" data-area="family" aria-pressed="false">Family / Personal</button>
+    <span>One commitment at a time.</span>
+  </nav>
+
+  <!-- Shown only while the selected area has no commitment yet -->
+  <section class="empty" id="empty-area" hidden>
+    <div class="empty-text">
+      <p class="eyebrow" id="empty-eyebrow">NOTHING HERE YET</p>
+      <h2 id="empty-title"></h2>
+      <p class="muted">Add a commitment when you are ready. You don’t need to fill both areas.</p>
+      <div class="empty-actions">
+        <button type="button" id="create-goal" class="primary">Create commitment</button>
+      </div>
+      <div id="cleared-notice" class="notice" hidden>
+        <span id="cleared-text"></span>
+        <button type="button" id="undo-clear" class="linkbtn">Undo</button>
+      </div>
+    </div>
+    <div class="daruma-wrap">
+      <svg class="daruma" data-eyes="0" viewBox="0 0 100 110" role="img" aria-label="Daruma with both eyes blank: no commitment yet"><use href="#daruma-shape"/></svg>
+      <span class="daruma-label">Eyes stay blank until you commit</span>
+    </div>
+  </section>
+
+  <section class="goal" id="goal-section">
+    <div>
+      <p class="eyebrow">MY COMMITMENT</p>
+      <h1 id="goal-title"></h1>
+      <p class="muted" id="goal-outcome"></p>
+      <button type="button" id="edit-goal" class="quiet">Edit commitment</button>
+    </div>
+    <div class="daruma-wrap">
+      <svg class="daruma" id="goal-daruma" data-eyes="1" viewBox="0 0 100 110" role="img" aria-label="Daruma with one eye filled: commitment in progress"><use href="#daruma-shape"/></svg>
+      <span class="daruma-label" id="daruma-label">Committed · one eye filled</span>
+    </div>
+  </section>
+
+  <section class="now" id="now-section">
+    <div class="card-top">
+      <span class="eyebrow" id="now-eyebrow"><i></i> NOW / STAY HERE</span>
+      <span id="step-number" class="fine"></span>
+    </div>
+    <h2 id="current-title"></h2>
+    <p class="muted" id="why"></p>
+    <div class="definition">
+      <p class="eyebrow" id="done-label">DONE WHEN</p>
+      <p id="done-when"></p>
+    </div>
+    <label class="eyebrow" for="next-action" id="next-label">START HERE</label>
+    <textarea id="next-action" rows="2" maxlength="1500" placeholder="One concrete action to move forward"></textarea>
+    <details id="note-panel">
+      <summary>Working note <span aria-hidden="true">+</span></summary>
+      <textarea id="note" aria-label="Working note" maxlength="1500" placeholder="Just enough context to pick up where you left off."></textarea>
+    </details>
+    <div class="card-bottom">
+      <button type="button" id="complete" class="primary">Complete this step →</button>
+      <button type="button" id="pick-focus" class="primary" hidden>Choose a step to focus on</button>
+      <button type="button" id="add-first" class="primary" hidden>Add your first step</button>
+      <button type="button" id="undo" class="quiet" hidden>Undo completion</button>
+      <span class="fine" id="focus-hint">Finish the step. Let the rest wait.</span>
+    </div>
+  </section>
+
+  <section class="path" id="path-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">ONE STEP AT A TIME</p>
+        <h2>The way forward</h2>
+      </div>
+      <button type="button" class="quiet" id="edit">Edit ladder</button>
+    </div>
+    <div id="removed" class="notice" hidden>
+      <span id="removed-text"></span>
+      <button type="button" id="undo-remove" class="linkbtn">Undo</button>
+      <button type="button" id="dismiss-removed" class="linkbtn muted-link" aria-label="Dismiss this message">Dismiss</button>
+    </div>
+    <div id="ladder"></div>
+    <p class="path-note">An adjustable route, not prerequisites. Choose a different focus when reality changes.</p>
+  </section>
+
+  <section class="park">
+    <details id="park-panel">
+      <summary>
+        <div><span class="park-icon" aria-hidden="true">↳</span><strong>Parked ideas</strong><span id="idea-count" class="count">0</span></div>
+        <span aria-hidden="true">+</span>
+      </summary>
+      <p class="muted">Worth keeping. Not a commitment. Kept separately for each area.</p>
+      <form id="park-form">
+        <input id="idea" aria-label="Idea to park" placeholder="Get it out of your head…" required maxlength="200">
+        <button class="primary">Park idea</button>
+      </form>
+      <div id="idea-undo" class="notice" hidden>
+        <span id="idea-undo-text"></span>
+        <button type="button" id="undo-idea" class="linkbtn">Undo</button>
+      </div>
+      <ul id="ideas"></ul>
+    </details>
+  </section>
+
+  <footer>
+    <span>Stop deciding when the next action is clear.</span>
+    <button type="button" class="quiet" id="data">Data &amp; backup</button>
+  </footer>
+
+  <div id="status" role="status" aria-live="polite"></div>
+</main>
+
+<dialog id="detail" aria-labelledby="dialog-caption">
+  <div class="section-heading">
+    <p class="eyebrow" id="dialog-caption">STEP DETAILS</p>
+    <button type="button" id="close" aria-label="Close" class="close">×</button>
+  </div>
+  <div id="dialog-status" class="dialog-status" role="status" aria-live="polite"></div>
+  <div id="detail-content"></div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
